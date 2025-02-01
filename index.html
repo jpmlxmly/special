@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ian's Little Adventure</title>
+    <link rel="icon" type="image/x-icon" href="rsc/icon.jpg">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            cursor: pointer;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        
+        .overlay-content {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="startOverlay" class="overlay">
+        <div class="overlay-content">
+            <h2>Click anywhere to start the adventure!</h2>
+        </div>
+    </div>
+
+    <audio id="myAudio" src="rsc/audio.mp3" loop></audio>
+    <canvas id="canvas1"></canvas>
+    <img id="bg-img" src="rsc/bg1.png">
+    <img id="player-img" src="rsc/model1.png">
+    <img id="companion-img" src="rsc/model2.png">
+    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const audio = document.getElementById("myAudio");
+            const overlay = document.getElementById("startOverlay");
+            let hasInteracted = false;
+
+            // Function to start audio and remove overlay
+            function startExperience() {
+                if (!hasInteracted) {
+                    audio.play();
+                    audio.volume = 0.3;
+                    overlay.style.display = 'none';
+                    hasInteracted = true;
+                }
+            }
+
+            // Start on click
+            overlay.addEventListener('click', startExperience);
+
+            // Also start on any key press
+            document.addEventListener('keydown', startExperience);
+
+            // Ensure audio keeps playing and doesn't get interrupted
+            audio.addEventListener('ended', function() {
+                audio.currentTime = 0;
+                audio.play();
+            });
+        });
+    </script>
+</body>
+</html>g
